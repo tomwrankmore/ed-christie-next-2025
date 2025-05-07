@@ -1,5 +1,6 @@
 "use client";
-import ReactPlayer from "react-player/vimeo";
+import dynamic from "next/dynamic";
+const ReactPlayer = dynamic(() => import("react-player/vimeo"), { ssr: false });
 
 const VimeoPlayer = ({ vimeoId }: { vimeoId: string }) => {
   return (
@@ -8,6 +9,7 @@ const VimeoPlayer = ({ vimeoId }: { vimeoId: string }) => {
         position: "relative",
         paddingTop: "56.25%" /* 16:9 Aspect Ratio */,
       }}
+      className="w-full max-w-[800px] h-0"
     >
       <ReactPlayer
         url={`https://vimeo.com/${vimeoId}`}
