@@ -291,21 +291,66 @@ export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: POSTS_QUERY
-// Query: *[_type == "post"]{  _id,  title,  slug}
+// Query: *[_type == "post"]|order(orderRank){  _id,  title,  slug,  mainImage,  categories[]->{    _id,    title,    description,  },}
 export type POSTS_QUERYResult = Array<{
   _id: string;
   title: string | null;
   slug: Slug | null;
+  mainImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    description: string | null;
+  }> | null;
 }>;
 // Variable: SINGLE_POST_QUERY
-// Query: *[_type == "product" && slug == $slug][0]{  _id,  title,  slug}
-export type SINGLE_POST_QUERYResult = null;
+// Query: *[_type == "post" && slug.current == $slug][0]{  _id,  title,  slug,  mainImage,  vimeoVid,  categories[]->{    _id,    title  },}
+export type SINGLE_POST_QUERYResult = {
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  mainImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  vimeoVid: string | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+  }> | null;
+} | null;
+// Variable: CATEGORIES_QUERY
+// Query: *[_type == "category"]{  _id,  title,}
+export type CATEGORIES_QUERYResult = Array<{
+  _id: string;
+  title: string | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"post\"]{\n  _id,\n  title,\n  slug\n}": POSTS_QUERYResult;
-    "*[_type == \"product\" && slug == $slug][0]{\n  _id,\n  title,\n  slug\n}": SINGLE_POST_QUERYResult;
+    "*[_type == \"post\"]|order(orderRank){\n  _id,\n  title,\n  slug,\n  mainImage,\n  categories[]->{\n    _id,\n    title,\n    description,\n  },\n}": POSTS_QUERYResult;
+    "*[_type == \"post\" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  mainImage,\n  vimeoVid,\n  categories[]->{\n    _id,\n    title\n  },\n}": SINGLE_POST_QUERYResult;
+    "*[_type == \"category\"]{\n  _id,\n  title,\n}": CATEGORIES_QUERYResult;
   }
 }

@@ -24,3 +24,31 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* react-masonry-css */
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -2rem; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 2rem; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > a {
+  /* change div to reference your elements you put in <Masonry> */
+  background: grey;
+  margin-bottom: 2rem;
+  transition: all 0.5s;
+  display: inline-block;
+}
+
+.my-masonry-grid:has(a:hover) a:not(:hover) {
+  filter: grayscale(75%) blur(1px) opacity(0.5);
+  transform: scale(0.85);
+}

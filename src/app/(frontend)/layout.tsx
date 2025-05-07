@@ -2,6 +2,7 @@
 // It is a simple layout that wraps the children components in a fragment.
 import type { Metadata } from "next";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Ed Christie - Motion Graphics & Animation",
@@ -17,6 +18,7 @@ export default function Layout({
     <>
       <Header />
       {children}
+      <Footer />
     </>
   );
 }
