@@ -32,7 +32,6 @@ const AllPostsGrid = ({
     // Step 1: Animate OUT
     gsap.to(items, {
       opacity: 0,
-      scale: 0.95,
       stagger: 0.01,
       duration: 0.1,
       ease: "power1.in",
@@ -47,10 +46,9 @@ const AllPostsGrid = ({
           ) as HTMLElement[];
           gsap.fromTo(
             newItems,
-            { opacity: 0, scale: 0.95 },
+            { opacity: 0 },
             {
               opacity: 1,
-              scale: 1,
               stagger: 0.01,
               duration: 0.2,
               ease: "power2.out",
