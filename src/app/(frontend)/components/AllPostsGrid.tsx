@@ -7,9 +7,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRef } from "react";
 import gsap from "gsap";
-import Flip from "gsap/Flip";
-
-gsap.registerPlugin(Flip);
 
 const breakpointColumnsObj = {
   default: 4,
@@ -26,18 +23,7 @@ const AllPostsGrid = ({
   categories: CATEGORIES_QUERYResult;
 }) => {
   const [currentPosts, setCurrentPosts] = useState([...posts]);
-
-  // const handleCatergoryClick = (category: string) => {
-  //   const filteredPosts = posts.filter((post) => {
-  //     return post.categories?.some((cat) => cat.title === category);
-  //   });
-  //   setCurrentPosts(filteredPosts);
-  // };
-
-  // const handleAllPostsClick = () => {
-  //   setCurrentPosts(posts);
-  // };
-
+  const [activeCategory, setActiveCategory] = useState<string>("All");
   const container = useRef<HTMLDivElement>(null);
 
   const animateFilter = (newPosts: typeof posts) => {
@@ -75,45 +61,59 @@ const AllPostsGrid = ({
     });
   };
 
-  const handleCatergoryClick = (category: string) => {
-    const filteredPosts = posts.filter((post) => {
-      return post.categories?.some((cat) => cat.title === category);
-    });
-    animateFilter(filteredPosts);
-  };
+  const handleCategoryClick = (category: string) => {
+    setActiveCategory(category);
 
-  const handleAllPostsClick = () => {
-    animateFilter(posts);
+    if (category === "All") {
+      animateFilter(posts);
+    } else {
+      const filteredPosts = posts.filter((post) =>
+        post.categories?.some((cat) => cat.title === category)
+      );
+      animateFilter(filteredPosts);
+    }
   };
 
   return (
     <div ref={container}>
-      <ul className="flex flex-wrap justify-center gap-4 mb-8">
-        <li
-          className="categoryItem text-center hover:cursor-pointer"
-          onClick={handleAllPostsClick}
-        >
-          All
-        </li>
-        <li className="categoryItem text-center hover:cursor-pointer">
-          <Link href={`/all-posts/showreel`}>Showreel</Link>
-        </li>
-        {categories
-          ?.filter((category) => category.title !== "Showreel")
-          .map((category, idx: number) => {
-            return (
-              <li
-                key={idx}
-                className="categoryItem text-center hover:cursor-pointer"
-                onClick={() =>
-                  category.title && handleCatergoryClick(category.title)
-                }
-              >
-                {category.title}
-              </li>
-            );
-          })}
-      </ul>
+      <div className="relative">
+        <ul className="flex flex-wrap justify-center gap-4 mb-8">
+          <li
+            className={`categoryItem text-center hover:cursor-pointer ${
+              activeCategory === "All"
+                ? "font-bold underline underline-offset-4"
+                : "font-normal no-underline"
+            }`}
+            onClick={() => handleCategoryClick("All")}
+          >
+            All
+          </li>
+          <li className="categoryItem text-center hover:cursor-pointer">
+            <Link href={`/all-posts/showreel`}>Showreel</Link>
+          </li>
+          {categories
+            ?.filter((category) => category.title !== "Showreel")
+            .map((category, idx: number) => {
+              return (
+                <li
+                  key={idx}
+                  className={`categoryItem text-center hover:cursor-pointer ${
+                    activeCategory === category.title
+                      ? "font-bold underline underline-offset-4"
+                      : "font-normal no-underline"
+                  }`}
+                  onClick={() =>
+                    category.title && handleCategoryClick(category.title)
+                  }
+                >
+                  {category.title}
+                </li>
+              );
+            })}
+        </ul>
+      </div>
+
+      {/* Mobile layout */}
       <div className="block sm:hidden">
         <ul className="flex flex-col justify-center gap-8">
           {currentPosts?.map((item, idx: number) => {
