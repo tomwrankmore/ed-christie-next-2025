@@ -19,6 +19,8 @@ export const SINGLE_POST_QUERY =
   slug,
   mainImage,
   vimeoVid,
+  staticImage,
+  body,
   categories[]->{
     _id,
     title

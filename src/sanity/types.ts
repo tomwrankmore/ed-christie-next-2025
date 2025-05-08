@@ -315,7 +315,7 @@ export type POSTS_QUERYResult = Array<{
   }> | null;
 }>;
 // Variable: SINGLE_POST_QUERY
-// Query: *[_type == "post" && slug.current == $slug][0]{  _id,  title,  slug,  mainImage,  vimeoVid,  categories[]->{    _id,    title  },}
+// Query: *[_type == "post" && slug.current == $slug][0]{  _id,  title,  slug,  mainImage,  vimeoVid,  staticImage,  body,  categories[]->{    _id,    title  },}
 export type SINGLE_POST_QUERYResult = {
   _id: string;
   title: string | null;
@@ -333,6 +333,19 @@ export type SINGLE_POST_QUERYResult = {
     _type: "image";
   } | null;
   vimeoVid: string | null;
+  staticImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  body: BlockContent | null;
   categories: Array<{
     _id: string;
     title: string | null;
@@ -350,7 +363,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"post\"]|order(orderRank){\n  _id,\n  title,\n  slug,\n  mainImage,\n  categories[]->{\n    _id,\n    title,\n    description,\n  },\n}": POSTS_QUERYResult;
-    "*[_type == \"post\" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  mainImage,\n  vimeoVid,\n  categories[]->{\n    _id,\n    title\n  },\n}": SINGLE_POST_QUERYResult;
+    "*[_type == \"post\" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  mainImage,\n  vimeoVid,\n  staticImage,\n  body,\n  categories[]->{\n    _id,\n    title\n  },\n}": SINGLE_POST_QUERYResult;
     "*[_type == \"category\"]{\n  _id,\n  title,\n}": CATEGORIES_QUERYResult;
   }
 }
