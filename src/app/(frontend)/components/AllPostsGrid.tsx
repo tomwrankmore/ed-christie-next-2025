@@ -88,7 +88,7 @@ const AllPostsGrid = ({
 
   return (
     <div ref={container}>
-      <ul className="flex justify-center gap-4 mb-8">
+      <ul className="flex flex-wrap justify-center gap-4 mb-8">
         <li
           className="categoryItem text-center hover:cursor-pointer"
           onClick={handleAllPostsClick}
@@ -96,9 +96,7 @@ const AllPostsGrid = ({
           All
         </li>
         <li className="categoryItem text-center hover:cursor-pointer">
-          <Link href={`/all-posts/showreel`}>
-            Showreel
-          </Link>
+          <Link href={`/all-posts/showreel`}>Showreel</Link>
         </li>
         {categories
           ?.filter((category) => category.title !== "Showreel")
@@ -116,9 +114,38 @@ const AllPostsGrid = ({
             );
           })}
       </ul>
+      <div className="block sm:hidden">
+        <ul className="flex flex-col justify-center gap-8">
+          {currentPosts?.map((item, idx: number) => {
+            return (
+              item.mainImage?.asset && (
+                <Link
+                  href={`/all-posts/${item?.slug?.current}`}
+                  key={idx}
+                  className="masonry-post-item"
+                >
+                  <Image
+                    key={idx}
+                    src={builder
+                      .image(item.mainImage.asset!)
+                      .width(800)
+                      .quality(75)
+                      .url()}
+                    alt="Content Gallery Image - add alt text"
+                    className="masonry-image-item cursor-pointer"
+                    width={800}
+                    height={600}
+                    unoptimized
+                  />
+                </Link>
+              )
+            );
+          })}
+        </ul>
+      </div>
       <Masonry
         breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid"
+        className="my-masonry-grid hidden sm:flex"
         columnClassName="my-masonry-grid_column"
       >
         {currentPosts?.map((item, idx: number) => {
