@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/img/logo.png";
+import { FaVimeoV } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
 
 const Header = () => {
   return (
@@ -23,10 +25,34 @@ const Header = () => {
       <nav>
         <ul className="flex space-x-4 text-black">
           <li>
+            <a
+              href="https://www.instagram.com/ed_christie_studio/"
+              className="hover:underline text-lg"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              title="Instagram"
+            >
+              <FaInstagram size={28} />
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://vimeo.com/user19988565"
+              className="hover:underline text-lg"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Vimeo"
+              title="Vimeo"
+            >
+              <FaVimeoV size={28}  />
+            </a>
+          </li>
+          {/* <li>
             <Link href="/about" className="hover:underline text-lg">
               about
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link href="/contact" className="hover:underline text-lg">
               contact
