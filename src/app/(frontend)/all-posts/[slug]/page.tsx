@@ -30,7 +30,7 @@ const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
       <div className="p-4 font-black uppercase mb-4 w-full text-center text-3xl bg-[#f2f2f2] text-black">
         {sanityPostData.title}
       </div>
-      
+
       <div className="mb-4 relative w-full">
         {sanityPostData.vimeoVid ? (
           <VimeoPlayer vimeoId={sanityPostData.vimeoVid} />
@@ -52,11 +52,7 @@ const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
         )}
       </div>
 
-      {sanityPostData.body && (
-        <p>
-          <PortableText value={sanityPostData.body} />
-        </p>
-      )}
+      {sanityPostData.body && <PortableText value={sanityPostData.body} />}
     </div>
   );
 };
