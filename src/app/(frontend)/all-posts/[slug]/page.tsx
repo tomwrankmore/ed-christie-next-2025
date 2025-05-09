@@ -7,6 +7,8 @@ import { builder } from "@/src/sanity/lib/image";
 // import Link from "next/link";
 import { AnimatedButton } from "../../components/AnimatedButton";
 import { PortableText } from "next-sanity";
+import YouTubePlayer from "../../components/YouTubePlayer";
+import { SINGLE_POST_QUERYResult } from "@/src/sanity/types";
 
 const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
@@ -17,6 +19,31 @@ const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   });
   if (!sanityPostData) {
     return <div>Post not found</div>;
+  }
+
+  function renderMedia(sanityPostData: SINGLE_POST_QUERYResult) {
+    if (sanityPostData?.vimeoVid) {
+      return <VimeoPlayer vimeoId={sanityPostData.vimeoVid} />;
+    } else if (sanityPostData?.youTubeVid) {
+      return <YouTubePlayer youTubeId={sanityPostData.youTubeVid} />;
+    } else {
+      return (
+        <Image
+          src={
+            sanityPostData?.mainImage
+              ? builder
+                  .image(sanityPostData.mainImage.asset!)
+                  .width(800)
+                  .quality(75)
+                  .url()
+              : "https://placehold.co/800x600"
+          }
+          alt="Content Gallery Image - add alt text"
+          width={800}
+          height={600}
+        />
+      );
+    }
   }
 
   return (
@@ -31,26 +58,7 @@ const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
         {sanityPostData.title}
       </div>
 
-      <div className="mb-4 relative w-full">
-        {sanityPostData.vimeoVid ? (
-          <VimeoPlayer vimeoId={sanityPostData.vimeoVid} />
-        ) : (
-          <Image
-            src={
-              sanityPostData.mainImage
-                ? builder
-                    .image(sanityPostData.mainImage.asset!)
-                    .width(800)
-                    .quality(75)
-                    .url()
-                : "https://placehold.co/800x600"
-            }
-            alt="Content Gallery Image - add alt text"
-            width={800}
-            height={600}
-          />
-        )}
-      </div>
+      <div className="mb-4 relative w-full">{renderMedia(sanityPostData)}</div>
 
       {sanityPostData.body && <PortableText value={sanityPostData.body} />}
     </div>

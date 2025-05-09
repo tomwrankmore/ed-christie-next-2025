@@ -45,14 +45,14 @@ const Header = () => {
               aria-label="Vimeo"
               title="Vimeo"
             >
-              <FaVimeoV size={28}  />
+              <FaVimeoV size={28} />
             </a>
           </li>
-          {/* <li>
+          <li>
             <Link href="/about" className="hover:underline text-lg">
               about
             </Link>
-          </li> */}
+          </li>
           <li>
             <Link href="/contact" className="hover:underline text-lg">
               contact

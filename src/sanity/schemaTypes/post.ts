@@ -44,6 +44,11 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'youTubeVid',
+      title: 'YouTube video link',
+      type: 'string',
+    }),
+    defineField({
       name: 'categories',
       title: 'Categories',
       type: 'array',

@@ -5,6 +5,7 @@ const ReactPlayer = dynamic(() => import("react-player/vimeo"), { ssr: false });
 const VimeoPlayer = ({ vimeoId }: { vimeoId: string }) => {
   return (
     <div className="relative aspect-video w-full max-h-[60vh]">
+      {/* If youTube exist */}
       <ReactPlayer
         url={`https://player.vimeo.com/video/${vimeoId}`}
         width="100%"
