@@ -9,7 +9,7 @@ const Contact = () => {
   return (
     <div
       ref={container}
-      className="min-h-screen px-8 flex flex-col items-start justify-center"
+      className="min-h-screen px-8 flex flex-col items-start justify-center max-w-[1280px] w-full mx-auto"
     >
       <h1 className="text-4xl font-bold mb-2">Contact</h1>
       <p className="splitLines max-w-2xl text-base mb-4">
