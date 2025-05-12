@@ -6,7 +6,7 @@ import { FaInstagram } from "react-icons/fa";
 
 const Header = () => {
   return (
-    <div className="flex justify-between items-end px-4 py-2 fixed top-0 left-0 right-0 z-10 backdrop-blur-md bg-white/5m0 border-b border-gray-200">
+    <div className="flex justify-between items-end px-4 py-2 fixed top-0 left-0 right-0 z-10 backdrop-blur-md bg-white/5m0 border-b border-gray-200 max-w-[1280px] w-full mx-auto">
       <h1>
         {logo ? (
           <Link href="/">
