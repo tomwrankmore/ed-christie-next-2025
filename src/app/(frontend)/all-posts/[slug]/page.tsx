@@ -1,21 +1,20 @@
 import { SINGLE_POST_QUERY } from "@/src/sanity/lib/queries";
-import { sanityFetch } from "@/src/sanity/lib/live";
 import VimeoPlayer from "../../components/VimeoPlayer";
 import Image from "next/image";
 import { builder } from "@/src/sanity/lib/image";
-// import { TiArrowBack } from "react-icons/ti";
-// import Link from "next/link";
 import { AnimatedButton } from "../../components/AnimatedButton";
 import { PortableText } from "next-sanity";
 import YouTubePlayer from "../../components/YouTubePlayer";
 import { SINGLE_POST_QUERYResult } from "@/src/sanity/types";
+import { sanityFetch } from "@/src/sanity/lib/client";
 
 const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   // Fetch post data from Sanity
-  const { data: sanityPostData } = await sanityFetch({
+  const sanityPostData = await sanityFetch({
     query: SINGLE_POST_QUERY,
     params: { slug },
+    revalidate: 60
   });
   if (!sanityPostData) {
     return <div>Post not found</div>;
