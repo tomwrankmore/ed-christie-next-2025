@@ -14,7 +14,7 @@ const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const sanityPostData = await sanityFetch({
     query: SINGLE_POST_QUERY,
     params: { slug },
-    revalidate: 60
+    // revalidate: 60
   });
   if (!sanityPostData) {
     return <div>Post not found</div>;
