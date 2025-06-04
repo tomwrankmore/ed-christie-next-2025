@@ -32,3 +32,15 @@ export const CATEGORIES_QUERY = defineQuery(`*[_type == "category"]{
   _id,
   title,
 }`);
+
+export const SETTINGS_QUERY = defineQuery(`*[_type == "settings"][0]{
+  title, 
+  description,
+  keywords,
+  navigationLogo
+}`);
+
+export const CONTACT_QUERY = defineQuery(`*[_type == "contactPage"][0]{
+  title, 
+  body
+}`);

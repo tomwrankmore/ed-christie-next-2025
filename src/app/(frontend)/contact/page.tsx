@@ -1,22 +1,15 @@
-"use client";
-import { useSplitText } from "@/lib/hooks/useTextSplit";
-import { useRef } from "react";
+import { sanityFetch } from "@/src/sanity/lib/live";
+import { CONTACT_QUERY } from "@/src/sanity/lib/queries";
+import { PortableText } from "next-sanity";
 
-const Contact = () => {
-  const container = useRef<HTMLDivElement>(null);
-  useSplitText(".splitLines");
-
+const Contact = async () => {
+  const { data } = await sanityFetch({
+    query: CONTACT_QUERY,
+  });
   return (
-    <div
-      ref={container}
-      className="min-h-screen px-8 flex flex-col items-start justify-center max-w-[1280px] w-full mx-auto"
-    >
-      <h1 className="text-4xl font-bold mb-2">Contact</h1>
-      <p className="splitLines max-w-2xl text-base mb-4">
-        Please get in touch if you would like to create or collaborate on any
-        projects.
-      </p>
-      <p className="splitLines">info@edchristie.studio</p>
+    <div className="min-h-screen px-8 flex flex-col items-start justify-center max-w-[1280px] w-full mx-auto">
+      <h1 className="text-4xl font-bold mb-2">{data?.title}</h1>
+      {data?.body && <PortableText value={data.body} />}
     </div>
   );
 };

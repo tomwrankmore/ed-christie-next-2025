@@ -359,6 +359,64 @@ export type CATEGORIES_QUERYResult = Array<{
   _id: string;
   title: string | null;
 }>;
+// Variable: SETTINGS_QUERY
+// Query: *[_type == "settings"][0]{  title,   description,  keywords,  navigationLogo}
+export type SETTINGS_QUERYResult = {
+  title: string | null;
+  description: string | null;
+  keywords: Array<string> | null;
+  navigationLogo: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+} | null;
+// Variable: CONTACT_QUERY
+// Query: *[_type == "contactPage"][0]{  title,   body}
+export type CONTACT_QUERYResult = {
+  title: string | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      mailto?: string;
+      _type: "emailLink";
+      _key: string;
+    } | {
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -367,5 +425,7 @@ declare module "@sanity/client" {
     "*[_type == \"post\"]|order(orderRank){\n  _id,\n  title,\n  slug,\n  mainImage,\n  categories[]->{\n    _id,\n    title,\n    description,\n  },\n}": POSTS_QUERYResult;
     "*[_type == \"post\" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  mainImage,\n  vimeoVid,\n  youTubeVid,\n  staticImage,\n  body,\n  categories[]->{\n    _id,\n    title\n  },\n}": SINGLE_POST_QUERYResult;
     "*[_type == \"category\"]{\n  _id,\n  title,\n}": CATEGORIES_QUERYResult;
+    "*[_type == \"settings\"][0]{\n  title, \n  description,\n  keywords,\n  navigationLogo\n}": SETTINGS_QUERYResult;
+    "*[_type == \"contactPage\"][0]{\n  title, \n  body\n}": CONTACT_QUERYResult;
   }
 }
